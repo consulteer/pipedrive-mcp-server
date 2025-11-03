@@ -1,13 +1,10 @@
 {
     "name": "Pipedrive MCP Server",
-    "image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye",
+    "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
     "features": {
         "ghcr.io/devcontainers/features/docker-in-docker:2": {
             "version": "latest",
             "enableNonRootDocker": "true"
-        },
-        "ghcr.io/devcontainers/features/git:1": {
-            "version": "latest"
         }
     },
     "customizations": {
@@ -37,8 +34,5 @@
         }
     },
     "postCreateCommand": "npm install",
-    "mounts": [
-        "source=${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig,target=/home/node/.gitconfig,type=bind,consistency=cached"
-    ],
     "remoteUser": "node"
 }

@@ -10,19 +10,22 @@
     "dev": "node --import tsx src/index.ts"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.7.1",
-    "dotenv": "^16.4.7",
+    "@modelcontextprotocol/sdk": "^1.21.0",
+    "dotenv": "^17.2.3",
     "bottleneck": "^2.19.5",
     "jsonwebtoken": "^9.0.2",
-    "pipedrive": "^22.10.1",
+    "pipedrive": "^30.3.2",
     "ts-node": "^10.9.2",
-    "zod": "^3.22.4"
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.6",
-    "@types/node": "^20.10.5",
-    "tsx": "^4.19.3",
-    "typescript": "^5.8.2"
+    "@types/node": "^24.10.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=22.0.0"
   },
   "repository": {
     "type": "git",
