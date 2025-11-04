@@ -26,6 +26,10 @@ services:
       - MCP_PORT=${MCP_PORT:-3000}
       - MCP_ENDPOINT=${MCP_ENDPOINT:-/message}
 
+      # Optional: ngrok configuration
+      - MCP_NGROK_ENABLED=${MCP_NGROK_ENABLED:-false}
+      - MCP_NGROK_AUTHTOKEN=${MCP_NGROK_AUTHTOKEN:-}
+
       # Node environment
       - NODE_ENV=production
 

@@ -42,6 +42,10 @@ MCP_PORT=3000
 MCP_JWT_SECRET=secret
 MCP_JWT_TOKEN=token_value
 MCP_JWT_ALGORITHM=HS256
+
+# Optional - ngrok tunnel (requires MCP_TRANSPORT=sse)
+MCP_NGROK_ENABLED=true
+MCP_NGROK_AUTHTOKEN=your_ngrok_token
 ```
 
 ### Docker Deployment
