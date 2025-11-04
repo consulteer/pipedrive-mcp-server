@@ -68,7 +68,7 @@ describe("getDeal tool", () => {
     it("should register with correct schema requiring dealId", () => {
       const call = (mockServer.tool as Mock).mock.calls[0];
       const schema = call[2];
-      
+
       expect(schema).toHaveProperty("dealId");
       expect(schema.dealId).toBeDefined();
     });
@@ -181,9 +181,7 @@ describe("getDeal tool", () => {
     it("should handle API errors with error message", async () => {
       // Arrange
       const errorMessage = "Deal not found";
-      (mockDealsApi.getDeal as Mock).mockRejectedValue(
-        new Error(errorMessage)
-      );
+      (mockDealsApi.getDeal as Mock).mockRejectedValue(new Error(errorMessage));
 
       // Act
       const result = await registeredToolHandler({ dealId: 999 });
@@ -417,9 +415,7 @@ describe("getDeal tool", () => {
 
     it("should include isError flag on error responses", async () => {
       // Arrange
-      (mockDealsApi.getDeal as Mock).mockRejectedValue(
-        new Error("Test error")
-      );
+      (mockDealsApi.getDeal as Mock).mockRejectedValue(new Error("Test error"));
 
       // Act
       const result = await registeredToolHandler({ dealId: 123 });
