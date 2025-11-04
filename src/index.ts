@@ -21,7 +21,7 @@ import ngrok from "@ngrok/ngrok";
 import { logger, LogLevel } from "./logger.js";
 import { registerPrompts } from "./prompts/index.js";
 import { registerTools } from "./tools/index.js";
-import { getErrorMessage } from "./tools/types.js";
+import { getErrorMessage } from "./types/index.js";
 
 // Load environment variables
 dotenv.config();

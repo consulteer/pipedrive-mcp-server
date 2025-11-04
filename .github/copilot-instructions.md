@@ -6,8 +6,9 @@ This is a **Model Context Protocol (MCP) server** that exposes Pipedrive CRM dat
 
 - **Modular structure**:
   - `src/index.ts` - server configuration, API setup, and transport logic
-  - `src/tools/` - individual tool files + shared types and registration
-  - `src/prompts/` - individual prompt files + shared types and registration
+  - `src/types/` - centralized type definitions (API, MCP, errors)
+  - `src/tools/` - individual tool files and registration
+  - `src/prompts/` - individual prompt files and registration
   - `src/logger.ts` - transport-aware logging utility
 - **Dual transport modes**: stdio (local CLI) and SSE (HTTP server for remote access)
 - **Rate-limited Pipedrive API wrapper** using Bottleneck proxy pattern
@@ -86,6 +87,35 @@ const dealsApi = withRateLimit(new pipedrive.DealsApi(apiClient));
 
 **Why**: Prevents Pipedrive API rate limit violations. Default: 250ms between calls, max 2 concurrent requests.
 
+### Centralized Types Structure
+
+All TypeScript types are organized in `src/types/` for better maintainability:
+
+```
+src/types/
+├── index.ts       # Central export point for all types
+├── api.ts         # ApiClients interface (Pipedrive API clients)
+├── mcp.ts         # ToolRegistration, PromptRegistration types
+└── errors.ts      # Error handling utilities (getErrorMessage, isErrorWithMessage)
+```
+
+**Usage pattern**:
+
+```typescript
+// Import from central types location
+import {
+  ApiClients,
+  ToolRegistration,
+  getErrorMessage,
+} from "../types/index.js";
+
+// Or import specific type files
+import { ApiClients } from "../types/api.js";
+import { ToolRegistration } from "../types/mcp.js";
+```
+
+**Note**: `src/tools/types.ts` and `src/prompts/types.ts` remain as re-export wrappers for backward compatibility but are marked as deprecated.
+
 ### Tool Definition Pattern
 
 Each tool is defined in its own file under `src/tools/` following this pattern:
@@ -94,7 +124,7 @@ Each tool is defined in its own file under `src/tools/` following this pattern:
 // src/tools/getTool.ts
 import { z } from "zod";
 import { logger } from "../logger.js";
-import { ToolRegistration, getErrorMessage } from "./types.js";
+import { ToolRegistration, getErrorMessage } from "../types/index.js";
 
 export const registerGetTool: ToolRegistration = (server, { apiClient }) => {
   server.tool(
@@ -126,7 +156,7 @@ export const registerGetTool: ToolRegistration = (server, { apiClient }) => {
 - Each tool exports a `ToolRegistration` function
 - Tools receive server and API clients as parameters
 - All responses are JSON-stringified text, not structured objects
-- Error handling uses `getErrorMessage()` from `tools/types.ts`
+- Error handling uses `getErrorMessage()` from `types/errors.ts`
 - Logging uses the transport-aware logger from `logger.ts`
 
 ### Logging Pattern

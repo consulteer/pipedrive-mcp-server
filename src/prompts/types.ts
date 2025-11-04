@@ -1,6 +1,5 @@
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-
 /**
- * Prompt registration function type
+ * @deprecated Import from src/types instead
+ * This file remains for backward compatibility
  */
-export type PromptRegistration = (server: McpServer) => void;
+export type { PromptRegistration } from "../types/index.js";

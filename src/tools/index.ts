@@ -1,5 +1,5 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { ApiClients } from "./types.js";
+import { ApiClients } from "../types/index.js";
 
 // Import all tool registration functions
 import { registerGetUsers } from "./getUsers.js";
