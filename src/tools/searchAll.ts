@@ -22,7 +22,7 @@ export const registerSearchAll: ToolRegistration = (
       try {
         const response = await itemSearchApi.searchItem({
           term,
-          item_types: itemTypes,
+          item_types: itemTypes as any,
         });
         return {
           content: [
