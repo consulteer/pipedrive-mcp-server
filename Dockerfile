@@ -33,7 +33,7 @@ COPY package*.json ./
 RUN npm ci --only=production
 
 # Copy built application from builder stage
-COPY --from=builder /app/build ./build
+COPY --from=builder /app/dist ./dist
 
 # Set NODE_ENV to production
 ENV NODE_ENV=production
@@ -45,4 +45,4 @@ EXPOSE 3000
 USER node
 
 # Start the application
-CMD ["node", "build/index.js"]
+CMD ["node", "dist/index.js"]

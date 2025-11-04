@@ -12,6 +12,7 @@ This is a Model Context Protocol (MCP) server that connects to the Pipedrive API
 - JWT authentication support
 - Built-in rate limiting for API requests
 - Advanced deal filtering (by owner, status, date range, value, etc.)
+- ngrok integration for public tunnel access
 
 ## Setup
 
@@ -154,6 +155,33 @@ Optional (Transport Configuration):
 - `MCP_TRANSPORT` - Transport type: `stdio` (default, for local use) or `sse` (for Docker/HTTP access)
 - `MCP_PORT` - Port for SSE transport (default: 3000, only used when `MCP_TRANSPORT=sse`)
 - `MCP_ENDPOINT` - Message endpoint path for SSE (default: /message, only used when `MCP_TRANSPORT=sse`)
+
+Optional (ngrok Configuration):
+
+- `MCP_NGROK_ENABLED` - Enable ngrok tunnel to expose server publicly (default: false, only used when `MCP_TRANSPORT=sse`)
+- `MCP_NGROK_AUTHTOKEN` - ngrok authtoken (required if `MCP_NGROK_ENABLED=true`). Get your token from [ngrok dashboard](https://dashboard.ngrok.com/get-started/your-authtoken)
+
+### Using ngrok for Public Access
+
+When you need to expose your MCP server publicly (e.g., for testing with remote clients), you can use ngrok:
+
+1. Sign up for a free ngrok account at [https://ngrok.com/](https://ngrok.com/)
+2. Get your authtoken from [https://dashboard.ngrok.com/get-started/your-authtoken](https://dashboard.ngrok.com/get-started/your-authtoken)
+3. Add to your `.env` file:
+   ```bash
+   MCP_TRANSPORT=sse
+   MCP_NGROK_ENABLED=true
+   MCP_NGROK_AUTHTOKEN=your_ngrok_authtoken_here
+   ```
+4. Start the server with `npm run dev` or `npm start`
+5. The console will display your public ngrok URL:
+   ```
+   🌐 ngrok tunnel established!
+   Public URL: https://abc123.ngrok.io
+   SSE endpoint: https://abc123.ngrok.io/sse
+   Message endpoint: https://abc123.ngrok.io/message
+   Health check: https://abc123.ngrok.io/health
+   ```
 
 ## Using with Claude
 
