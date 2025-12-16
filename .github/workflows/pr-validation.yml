@@ -87,7 +87,7 @@ jobs:
           retention-days: 30
 
       - name: Upload coverage reports
-        if: always()
+        if: steps.coverage.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report-node-${{ matrix.node-version }}
