@@ -166,7 +166,7 @@ describe("getDeal tool", () => {
       const result = await registeredToolHandler({ dealId: 999 });
 
       // Assert
-      // JSON.stringify(undefined) returns undefined, which means the text property is omitted
+      // JSON.stringify(undefined, null, 2) returns the primitive undefined, which means the text property is omitted from the object
       expect(result).toEqual({
         content: [
           {
