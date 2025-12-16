@@ -53,7 +53,9 @@ export const registerGetDeals: ToolRegistration = (server, { dealsApi }) => {
         // If searching by title, use the search API first
         if (searchTitle) {
           // @ts-ignore - Bypass incorrect TypeScript definition
-          const searchResponse = await dealsApi.searchDeals(searchTitle);
+          const searchResponse = await dealsApi.searchDeals({
+            term: searchTitle,
+          });
           filteredDeals = (searchResponse.data as any) || [];
         } else {
           // Calculate the date filter (daysBack days ago)

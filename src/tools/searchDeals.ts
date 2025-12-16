@@ -12,7 +12,7 @@ export const registerSearchDeals: ToolRegistration = (server, { dealsApi }) => {
     async ({ term }) => {
       try {
         // @ts-ignore - Bypass incorrect TypeScript definition
-        const response = await dealsApi.searchDeals(term);
+        const response = await dealsApi.searchDeals({ term });
         return {
           content: [
             {
