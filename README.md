@@ -1,7 +1,7 @@
 # Pipedrive MCP Server
 
-[![PR Validation](https://github.com/MiguelTVMS/pipedrive-mcp-server/actions/workflows/pr-validation.yml/badge.svg?branch=develop)](https://github.com/MiguelTVMS/pipedrive-mcp-server/actions/workflows/pr-validation.yml)
-[![Docker Build](https://github.com/MiguelTVMS/pipedrive-mcp-server/actions/workflows/docker-build.yml/badge.svg)](https://github.com/MiguelTVMS/pipedrive-mcp-server/actions/workflows/docker-build.yml)
+[![PR Validation](https://github.com/consulteer/pipedrive-mcp-server/actions/workflows/pr-validation.yml/badge.svg?branch=develop)](https://github.com/consulteer/pipedrive-mcp-server/actions/workflows/pr-validation.yml)
+[![Docker Build](https://github.com/consulteer/pipedrive-mcp-server/actions/workflows/docker-build.yml/badge.svg)](https://github.com/consulteer/pipedrive-mcp-server/actions/workflows/docker-build.yml)
 
 This is a Model Context Protocol (MCP) server that connects to the Pipedrive API v2. It allows you to expose Pipedrive data and functionality to LLM applications like Claude.
 
@@ -83,7 +83,7 @@ docker run -d \
   -e PIPEDRIVE_DOMAIN=your-company.pipedrive.com \
   -e MCP_TRANSPORT=sse \
   -e MCP_PORT=3000 \
-  ghcr.io/migueltvms/pipedrive-mcp-server:main
+  ghcr.io/consulteer/pipedrive-mcp-server:main
 ```
 
 **For stdio transport (local use):**
@@ -92,7 +92,7 @@ docker run -d \
 docker run -i \
   -e PIPEDRIVE_API_TOKEN=your_api_token_here \
   -e PIPEDRIVE_DOMAIN=your-company.pipedrive.com \
-  ghcr.io/migueltvms/pipedrive-mcp-server:main
+  ghcr.io/consulteer/pipedrive-mcp-server:main
 ```
 
 #### Option 3: Integrating into Existing Project
@@ -104,7 +104,7 @@ services:
   # Your existing services...
 
   pipedrive-mcp-server:
-    image: ghcr.io/migueltvms/pipedrive-mcp-server:main
+    image: ghcr.io/consulteer/pipedrive-mcp-server:main
     container_name: pipedrive-mcp-server
     restart: unless-stopped
     ports:
