@@ -70,7 +70,7 @@ describe("searchDeals tool", () => {
 
       const result = await registeredToolHandler({ term: "Deal" });
 
-      expect(mockDealsApi.searchDeals).toHaveBeenCalledWith("Deal");
+      expect(mockDealsApi.searchDeals).toHaveBeenCalledWith({ term: "Deal" });
       expect(result).toEqual({
         content: [
           {
