@@ -1,6 +1,6 @@
 {
   "name": "pipedrive-mcp-server",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Model Context Protocol server for Pipedrive API integration",
   "main": "dist/index.js",
   "type": "module",
@@ -49,7 +49,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MiguelTVMS/pipedrive-mcp-server.git"
+    "url": "git+https://github.com/consulteer/pipedrive-mcp-server.git"
   },
   "keywords": [
     "pipedrive",
@@ -64,7 +64,7 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/MiguelTVMS/pipedrive-mcp-server/issues"
+    "url": "https://github.com/consulteer/pipedrive-mcp-server/issues"
   },
-  "homepage": "https://github.com/MiguelTVMS/pipedrive-mcp-server#readme"
+  "homepage": "https://github.com/consulteer/pipedrive-mcp-server#readme"
 }

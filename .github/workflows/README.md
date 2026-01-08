@@ -77,10 +77,10 @@ start index.html  # Windows
 
 Add these to your README.md:
 
-> **Note:** Replace `MiguelTVMS/pipedrive-mcp-server` with your own repository path if you fork or transfer this repository.
+> **Note:** Replace `consulteer/pipedrive-mcp-server` with your own repository path if you fork or transfer this repository.
 ```markdown
-![PR Validation](https://github.com/MiguelTVMS/pipedrive-mcp-server/actions/workflows/pr-validation.yml/badge.svg?branch=develop)
-![Docker Build](https://github.com/MiguelTVMS/pipedrive-mcp-server/actions/workflows/docker-build.yml/badge.svg)
+![PR Validation](https://github.com/consulteer/pipedrive-mcp-server/actions/workflows/pr-validation.yml/badge.svg?branch=develop)
+![Docker Build](https://github.com/consulteer/pipedrive-mcp-server/actions/workflows/docker-build.yml/badge.svg)
 ```
 
 ## Local Development
