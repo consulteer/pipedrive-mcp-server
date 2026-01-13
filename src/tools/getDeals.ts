@@ -56,7 +56,19 @@ export const registerGetDeals: ToolRegistration = (server, { dealsApi }) => {
           const searchResponse = await dealsApi.searchDeals({
             term: searchTitle,
           });
-          filteredDeals = (searchResponse.data as any) || [];
+
+          // Pipedrive searchDeals returns { success, data: { items: [...] }, additional_data }
+          // Normalize to an array of deal objects
+          const searchData = (searchResponse as any)?.data;
+          const items = Array.isArray(searchData?.items)
+            ? searchData.items
+            : Array.isArray(searchData)
+              ? searchData
+              : [];
+
+          filteredDeals = items
+            .map((item: any) => item?.item ?? item)
+            .filter(Boolean);
         } else {
           // Calculate the date filter (daysBack days ago)
           const filterDate = new Date();
@@ -77,7 +89,7 @@ export const registerGetDeals: ToolRegistration = (server, { dealsApi }) => {
           // Fetch deals with filters
           // @ts-ignore - getDeals accepts parameters but types may be incomplete
           const response = await dealsApi.getDeals(params);
-          filteredDeals = response.data || [];
+          filteredDeals = Array.isArray(response?.data) ? response.data : [];
         }
 
         // Apply additional client-side filtering
