@@ -109,6 +109,38 @@ describe("searchPersons tool", () => {
     });
   });
 
+  describe("input validation", () => {
+    it("should reject terms shorter than 2 characters", async () => {
+      const result = await registeredToolHandler({ term: "a" });
+
+      expect(mockPersonsApi.searchPersons).not.toHaveBeenCalled();
+      expect(result).toEqual({
+        content: [
+          {
+            type: "text",
+            text: "Error searching persons: Search term must be at least 2 characters",
+          },
+        ],
+        isError: true,
+      });
+    });
+
+    it("should trim whitespace before validation", async () => {
+      const result = await registeredToolHandler({ term: " a " });
+
+      expect(mockPersonsApi.searchPersons).not.toHaveBeenCalled();
+      expect(result).toEqual({
+        content: [
+          {
+            type: "text",
+            text: "Error searching persons: Search term must be at least 2 characters",
+          },
+        ],
+        isError: true,
+      });
+    });
+  });
+
   describe("error handling", () => {
     it("should handle API errors", async () => {
       (mockPersonsApi.searchPersons as Mock).mockRejectedValue(

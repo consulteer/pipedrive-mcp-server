@@ -10,6 +10,20 @@ export const registerGetDeal: ToolRegistration = (server, { dealsApi }) => {
       dealId: z.number().describe("Pipedrive deal ID"),
     },
     async ({ dealId }) => {
+      if (dealId === null || dealId === undefined || Number.isNaN(dealId)) {
+        const message = "dealId is required and must be a number";
+        logger.error(message);
+        return {
+          content: [
+            {
+              type: "text",
+              text: message,
+            },
+          ],
+          isError: true,
+        };
+      }
+
       try {
         // @ts-ignore - Bypass incorrect TypeScript definition, API expects just the ID
         const response = await dealsApi.getDeal(dealId);

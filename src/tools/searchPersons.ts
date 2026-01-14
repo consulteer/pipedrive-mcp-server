@@ -10,12 +10,31 @@ export const registerSearchPersons: ToolRegistration = (
     "search-persons",
     "Search persons by term",
     {
-      term: z.string().describe("Search term for persons"),
+      term: z
+        .string()
+        .min(2, "Search term must be at least 2 characters")
+        .describe("Search term for persons"),
     },
     async ({ term }) => {
+      const trimmedTerm = term.trim();
+
+      if (trimmedTerm.length < 2) {
+        const message = "Search term must be at least 2 characters";
+        logger.error(message);
+        return {
+          content: [
+            {
+              type: "text",
+              text: `Error searching persons: ${message}`,
+            },
+          ],
+          isError: true,
+        };
+      }
+
       try {
         // @ts-ignore - Bypass incorrect TypeScript definition
-        const response = await personsApi.searchPersons(term);
+        const response = await personsApi.searchPersons(trimmedTerm);
         return {
           content: [
             {

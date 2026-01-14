@@ -177,6 +177,38 @@ describe("getDeal tool", () => {
     });
   });
 
+  describe("input validation", () => {
+    it("should return error when dealId is undefined", async () => {
+      const result = await registeredToolHandler({ dealId: undefined as any });
+
+      expect(mockDealsApi.getDeal).not.toHaveBeenCalled();
+      expect(result).toEqual({
+        content: [
+          {
+            type: "text",
+            text: "dealId is required and must be a number",
+          },
+        ],
+        isError: true,
+      });
+    });
+
+    it("should return error when dealId is null", async () => {
+      const result = await registeredToolHandler({ dealId: null as any });
+
+      expect(mockDealsApi.getDeal).not.toHaveBeenCalled();
+      expect(result).toEqual({
+        content: [
+          {
+            type: "text",
+            text: "dealId is required and must be a number",
+          },
+        ],
+        isError: true,
+      });
+    });
+  });
+
   describe("error handling", () => {
     it("should handle API errors with error message", async () => {
       // Arrange

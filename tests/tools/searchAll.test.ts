@@ -40,7 +40,7 @@ describe("searchAll tool", () => {
     const mockData = { id: 123, name: "Test Data" };
     (mockItemSearchApi.searchItem as Mock).mockResolvedValue({ data: mockData });
 
-    const result = await registeredToolHandler({ term: 123, itemTypes: "test" });
+    const result = await registeredToolHandler({ term: "Test", itemTypes: "test" });
 
     expect(result).toHaveProperty("content");
     expect((result as any).content[0]).toHaveProperty("type", "text");
@@ -49,8 +49,40 @@ describe("searchAll tool", () => {
   it("should handle API errors", async () => {
     (mockItemSearchApi.searchItem as Mock).mockRejectedValue(new Error("API error"));
 
-    const result = await registeredToolHandler({ term: 123, itemTypes: "test" });
+    const result = await registeredToolHandler({ term: "Test", itemTypes: "test" });
 
     expect((result as any).isError).toBe(true);
+  });
+
+  describe("input validation", () => {
+    it("should reject terms shorter than 2 characters", async () => {
+      const result = await registeredToolHandler({ term: "a", itemTypes: "deal" });
+
+      expect(mockItemSearchApi.searchItem).not.toHaveBeenCalled();
+      expect(result).toEqual({
+        content: [
+          {
+            type: "text",
+            text: "Error performing search: Search term must be at least 2 characters",
+          },
+        ],
+        isError: true,
+      });
+    });
+
+    it("should trim whitespace before validation", async () => {
+      const result = await registeredToolHandler({ term: " a ", itemTypes: "deal" });
+
+      expect(mockItemSearchApi.searchItem).not.toHaveBeenCalled();
+      expect(result).toEqual({
+        content: [
+          {
+            type: "text",
+            text: "Error performing search: Search term must be at least 2 characters",
+          },
+        ],
+        isError: true,
+      });
+    });
   });
 });

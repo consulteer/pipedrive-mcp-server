@@ -40,7 +40,7 @@ describe("searchLeads tool", () => {
     const mockData = { id: 123, name: "Test Data" };
     (mockLeadsApi.searchLeads as Mock).mockResolvedValue({ data: mockData });
 
-    const result = await registeredToolHandler({ term: 123 });
+    const result = await registeredToolHandler({ term: "Test" });
 
     expect(result).toHaveProperty("content");
     expect((result as any).content[0]).toHaveProperty("type", "text");
@@ -49,8 +49,40 @@ describe("searchLeads tool", () => {
   it("should handle API errors", async () => {
     (mockLeadsApi.searchLeads as Mock).mockRejectedValue(new Error("API error"));
 
-    const result = await registeredToolHandler({ term: 123 });
+    const result = await registeredToolHandler({ term: "Test" });
 
     expect((result as any).isError).toBe(true);
+  });
+
+  describe("input validation", () => {
+    it("should reject terms shorter than 2 characters", async () => {
+      const result = await registeredToolHandler({ term: "a" });
+
+      expect(mockLeadsApi.searchLeads).not.toHaveBeenCalled();
+      expect(result).toEqual({
+        content: [
+          {
+            type: "text",
+            text: "Error searching leads: Search term must be at least 2 characters",
+          },
+        ],
+        isError: true,
+      });
+    });
+
+    it("should trim whitespace before validation", async () => {
+      const result = await registeredToolHandler({ term: " a " });
+
+      expect(mockLeadsApi.searchLeads).not.toHaveBeenCalled();
+      expect(result).toEqual({
+        content: [
+          {
+            type: "text",
+            text: "Error searching leads: Search term must be at least 2 characters",
+          },
+        ],
+        isError: true,
+      });
+    });
   });
 });
