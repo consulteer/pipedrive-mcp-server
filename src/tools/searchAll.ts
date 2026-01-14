@@ -10,7 +10,10 @@ export const registerSearchAll: ToolRegistration = (
     "search-all",
     "Search across all item types (deals, persons, organizations, etc.)",
     {
-      term: z.string().describe("Search term"),
+      term: z
+        .string()
+        .min(2, "Search term must be at least 2 characters")
+        .describe("Search term"),
       itemTypes: z
         .string()
         .optional()
@@ -19,9 +22,25 @@ export const registerSearchAll: ToolRegistration = (
         ),
     },
     async ({ term, itemTypes }) => {
+      const trimmedTerm = term.trim();
+
+      if (trimmedTerm.length < 2) {
+        const message = "Search term must be at least 2 characters";
+        logger.error(message);
+        return {
+          content: [
+            {
+              type: "text",
+              text: `Error performing search: ${message}`,
+            },
+          ],
+          isError: true,
+        };
+      }
+
       try {
         const response = await itemSearchApi.searchItem({
-          term,
+          term: trimmedTerm,
           item_types: itemTypes as any,
         });
         return {

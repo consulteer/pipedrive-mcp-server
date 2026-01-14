@@ -7,12 +7,31 @@ export const registerSearchLeads: ToolRegistration = (server, { leadsApi }) => {
     "search-leads",
     "Search leads by term",
     {
-      term: z.string().describe("Search term for leads"),
+      term: z
+        .string()
+        .min(2, "Search term must be at least 2 characters")
+        .describe("Search term for leads"),
     },
     async ({ term }) => {
+      const trimmedTerm = term.trim();
+
+      if (trimmedTerm.length < 2) {
+        const message = "Search term must be at least 2 characters";
+        logger.error(message);
+        return {
+          content: [
+            {
+              type: "text",
+              text: `Error searching leads: ${message}`,
+            },
+          ],
+          isError: true,
+        };
+      }
+
       try {
         // @ts-ignore - Bypass incorrect TypeScript definition
-        const response = await leadsApi.searchLeads(term);
+        const response = await leadsApi.searchLeads(trimmedTerm);
         return {
           content: [
             {
